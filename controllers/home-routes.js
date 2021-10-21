@@ -4,6 +4,7 @@ const { Post, User, Comment, Vote } = require('../models');
 
 // get all posts for homepage
 router.get('/', (req, res) => {
+  console.log('======================');
   Post.findAll({
     attributes: [
       'id',
@@ -28,9 +29,8 @@ router.get('/', (req, res) => {
     ]
   })
     .then(dbPostData => {
-      console.log(dbPostData[0].get({plain: true})); 
-      // pass a single post object into the homepage template
       const posts = dbPostData.map(post => post.get({ plain: true }));
+
       res.render('homepage', { posts });
     })
     .catch(err => {
@@ -46,12 +46,6 @@ router.get('/login', (req, res) => {
   }
 
   res.render('login');
-});
-
-router.get('/', (req, res) => {
-  console.log(req.session);
-
-  // other logic...
 });
 
 module.exports = router;
